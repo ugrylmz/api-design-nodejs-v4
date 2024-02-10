@@ -1,6 +1,8 @@
 import express from "express";
 import router from "./router";
 import morgan from "morgan";
+import { createNewUser, loginUser } from "./handlers/user";
+import { protect } from "./modules/auth";
 
 
 const app = express();
@@ -21,6 +23,10 @@ app.use("/",(req, res, next) => {
     res.status(401).send('not authorized');
 });
 
+
+
 app.use('/api', router)
+app.post('/user', createNewUser);
+app.post('/login', loginUser);
 
 export default app;
