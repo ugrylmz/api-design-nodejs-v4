@@ -25,7 +25,7 @@ model Product {
   name        String   @unique
   belongsToId String
   belongsTo   User     @relation(fields: [belongsToId], references: [id])
-  updates      Update[]
+  updates     Update[]
 }
 
 enum UPDATE_STATUS {
