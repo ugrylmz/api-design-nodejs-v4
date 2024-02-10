@@ -18,10 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(customLogger('custom logger'));
 
 
-app.use("/",(req, res, next) => {
-    next();
-    res.status(401).send('not authorized');
-});
 
 
 
