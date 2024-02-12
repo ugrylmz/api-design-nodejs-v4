@@ -10,8 +10,8 @@ export const hashPassword = async (password) => {
 }
 
 
-export const createJWT = (user) => {
-  const token = jwt.sign(
+export const createJWT = async (user) => {
+  const token = await jwt.sign(
     { id: user.id, username: user.username },
     process.env.JWT_SECRET
   );
