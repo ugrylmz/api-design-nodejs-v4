@@ -16,11 +16,11 @@ export const createNewUser = async (req, res) => {
             data: {
                 username,
                 email,
-                password:hashedPassword 
+                password: hashedPassword
             }
         });
         const token = await createJWT(newUser);
-        res.status(201).json({ token });
+        res.status(201).json({ token }, username, email);
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });
@@ -30,7 +30,7 @@ export const createNewUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
     if(!username || !password) return res.status(400).json({ message: 'Username and password are required.' });
-    if(username.length>2 || password.length>8) return res.status(400).json({ message: 'Username must be at least 3 characters long and password must be at least 8 characters long.' });
+    if(username.length<3 || password.length<8) return res.status(400).json({ message: 'Username must be at least 3 characters long and password must be at least 8 characters long.' });
     const user = await prisma.user.findUnique({
         where: {
             username
