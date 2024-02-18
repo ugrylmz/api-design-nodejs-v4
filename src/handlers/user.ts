@@ -46,3 +46,8 @@ export const loginUser = async (req, res) => {
     const token = await createJWT(user);
     res.status(200).json({ token });
 }
+
+export const getUsers = async (req, res) => {
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
+}
