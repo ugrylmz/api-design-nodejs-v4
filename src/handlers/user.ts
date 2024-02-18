@@ -5,9 +5,10 @@ import { validateUserInput } from '../utils/validation';
 export const createNewUser = async (req, res) => {
     const { username, email, password } = req.body;
     const validation = validateUserInput(username, email, password);
-    console.log(validation);
-   if (!validation.isValid) {
-       return res.status(400).json({ errors: validation.errors });
+
+    if (!validation.isValid) {
+        console.log('Validation Errors:', validation.errors);
+        return res.status(400).json({ errors: validation.errors });
     }
 
     try {
@@ -22,10 +23,11 @@ export const createNewUser = async (req, res) => {
         const token = await createJWT(newUser);
         res.status(201).json({ token }, username, email);
     } catch (error) {
-        console.log(error);
+        console.log('Error:', error, error.message);
         res.status(400).json({ error: error.message });
     }
 }
+
 
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
@@ -47,7 +49,14 @@ export const loginUser = async (req, res) => {
     res.status(200).json({ token });
 }
 
+
 export const getUsers = async (req, res) => {
     const users = await prisma.user.findMany();
     res.status(200).json(users);
 }
+
+
+// export const deleteAllUsers = async (req, res) => {
+//     await prisma.user.deleteMany();
+//     res.status(200).json({ message: 'All users deleted.' });
+// }
