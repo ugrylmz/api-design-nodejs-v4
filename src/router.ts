@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import {body, validationResult} from "express-validator";
 import { handleInputErrors } from './modules/middleware';
+import { updateValidation } from './validations/update';
 
 const router = Router();
 
@@ -25,7 +26,9 @@ router.get('/update', () => {});
 router.get('/update/:id', () => {});
 router.put('/update/:id', () => {});
 router.post('/update', () => {});
-router.delete('/update/:id', () => {});
+router.delete('/update/:id', 
+updateValidation,
+() => {});
 
 /**
  * Update Point
